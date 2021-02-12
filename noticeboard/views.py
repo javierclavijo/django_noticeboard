@@ -1,12 +1,28 @@
 from django.shortcuts import render
 from django.views import generic
+from django.db.models.functions import Now
 
-from . import models
+from .models import Notice
+
 
 # Create your views here.
 
 
-class IndexView(generic.ListView):
-    model = models.Notice
+class ActiveNoticesView(generic.ListView):
+    def get_queryset(self):
+        """Return only the notices which have not expired yet"""
+        return Notice.objects.filter(exp_date__gt=Now())
 
-# TODO: Expired notes view
+    model = Notice
+
+
+class ExpiredNoticeView(generic.ListView):
+    def get_queryset(self):
+        """Return only the notices which have not expired yet"""
+        return Notice.objects.filter(exp_date__lte=Now())
+
+    model = Notice
+
+
+class SingleNoticeView(generic.DetailView):
+    model = Notice
