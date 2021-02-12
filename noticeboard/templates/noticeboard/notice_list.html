@@ -1,0 +1,8 @@
+<h1>Notices</h1>
+<ul>
+{% for notice in object_list %}
+    <li>{{ notice.pub_date|date }} - {{ notice.title }}</li>
+{% empty %}
+    <li>No notices yet.</li>
+{% endfor %}
+</ul>
