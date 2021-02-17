@@ -4,6 +4,8 @@ from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -21,8 +23,12 @@ class RegistrationSuccessView(TemplateView):
     template_name = 'registration/registration-success.html'
 
 
-class UserProfileView(DetailView):
+class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
+    success_url = reverse_lazy('noticeboard:active-notices')
+
+    def get_success_url(self):
+        return reverse_lazy('noticeboard:active-notices')
 
     def get_object(self):
         return get_object_or_404(User, pk=self.request.user.id)

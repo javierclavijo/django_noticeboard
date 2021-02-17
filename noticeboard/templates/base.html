@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    {#    <link rel="stylesheet" href="style.css">#}
+    {# <link rel="stylesheet" href="style.css"> #}
     <title>{% block title %}Noticeboard{% endblock %}</title>
 </head>
 
 <body>
-<div id="sidebar">
-    {% block sidebar %}
+    <div id="sidebar">
+        {% block sidebar %}
         <ul>
             {% url 'accounts:login' as login_url %}
-            {% if request.path != login_url %}
-                {% if not request.user.is_authenticated %}
-                    <li><a href="{% url 'accounts:login' %}">Log in</a></li>
-                {% else %}
-                    <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
-                {% endif %}
-            {% endif %}
-        </ul>
-    {% endblock %}
-</div>
 
-<div id="content">
-    {% block content %}{% endblock %}
-</div>
+            {% if request.path != login_url %}
+
+            {% if not request.user.is_authenticated %}
+            <li><a href="{% url 'accounts:login' %}">Log in</a></li>
+            {% else %}
+            <li><a href="{% url 'accounts:logout' %}">Log out</a></li>
+            {% endif %}
+
+            {% endif %}
+
+            <li><a href="{% url 'noticeboard:active-notices' %}">Active notices</a></li>
+            <li><a href="{% url 'noticeboard:expired-notices' %}">Expired notices</a></li>
+        </ul>
+        {% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
 </body>
+
 </html>

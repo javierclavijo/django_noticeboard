@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.utils import timezone
+from django.urls import reverse
 
 # Create your models here.
 
@@ -15,3 +16,9 @@ class Notice(models.Model):
     body = models.TextField(max_length=500)
     # hidden = models.BooleanField(default=False)
     # attachment = models.FileField(blank=True)
+
+    def get_absolute_url(self):
+        return reverse('noticeboard:single-notice', kwargs={'pk': self.pk})
+
+    def has_expired(self):
+        return self.exp_date <= timezone.now()
