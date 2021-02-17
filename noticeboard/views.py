@@ -12,18 +12,21 @@ from .forms import NewNoteForm
 class ActiveNoticesView(generic.ListView):
     def get_queryset(self):
         """Return only the notices which have not expired yet"""
-        return Notice.objects.filter(exp_date__gt=Now())
-
-    context_object_name = 'active_notices_list'
-
+        return Notice.objects.filter(exp_date__gt=Now()).order_by('exp_date', 'title')
     model = Notice
+    extra_context = {
+        'title': 'Active Notices'
+    }
 
 
 class ExpiredNoticeView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """Return only the notices which have expired"""
-        return Notice.objects.filter(exp_date__lte=Now())
+        return Notice.objects.filter(exp_date__lte=Now()).order_by('-exp_date', 'title')
     model = Notice
+    extra_context = {
+        'title': 'Expired Notices'
+    }
 
 
 class SingleNoticeView(generic.DetailView):
