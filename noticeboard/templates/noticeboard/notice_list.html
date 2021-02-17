@@ -1,9 +1,12 @@
-<h1>Active Notices</h1>
-<ul>
-    {% for notice in object_list %}
-        <li><a href="{% url 'noticeboard:single-notice' notice.id %}">{{ notice.pub_date|date }}
-            - {{ notice.title }}</a></li>
-    {% empty %}
-        <li>No notices yet.</li>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Active Notices</h1>
+    <ul>
+        {% for notice in object_list %}
+            <li><a href="{% url 'noticeboard:single-notice' notice.id %}">{{ notice.pub_date|date }}
+                - {{ notice.title }}</a></li>
+        {% empty %}
+            <li>No notices yet.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

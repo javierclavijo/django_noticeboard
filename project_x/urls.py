@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
+
 """project_x URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -16,8 +18,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-
 urlpatterns = [
-    path('noticeboard/', include('noticeboard.urls')),
+    path('', RedirectView.as_view(pattern_name='noticeboard:active-notices'), name='home'),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('noticeboard/', include('noticeboard.urls', namespace='noticeboard')),
     path('admin/', admin.site.urls),
 ]
