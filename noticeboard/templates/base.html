@@ -18,7 +18,7 @@
             <li><a href="{% url 'accounts:login' %}">Log in</a></li>
             {% else %}
             <li>
-                <p>Hello, <a href={% url 'accounts:user-profile' %}>
+                <p>Hello, <a href={% url 'accounts:current-user' %}>
                         {{request.user.username}}</a>. <a href="{% url 'accounts:logout' %}">Log out?</a></p>
             </li>
             {% endif %}
@@ -27,6 +27,7 @@
 
             <li><a href="{% url 'noticeboard:active-notices' %}">Active notices</a></li>
             <li><a href="{% url 'noticeboard:expired-notices' %}">Expired notices</a></li>
+            <li><a href="{% url 'noticeboard:new' %}">Publish a new notice</a></li>
         </ul>
         {% endblock %}
     </div>

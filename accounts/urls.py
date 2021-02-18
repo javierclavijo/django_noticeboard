@@ -23,8 +23,11 @@ urlpatterns = [
          name='registration'),
     path('registration/done/',
          views.RegistrationSuccessView.as_view()),
-    path('profile/',
+    path('<int:pk>/',
          views.UserProfileView.as_view(),
          name='user-profile'),
+    path('my/',
+         views.CurrentUserProfileView.as_view(),
+         name='current-user'),
     path('', RedirectView.as_view(pattern_name='accounts:login'), name='home'),
 ]

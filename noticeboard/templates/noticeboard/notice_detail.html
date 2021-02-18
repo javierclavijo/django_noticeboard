@@ -5,7 +5,13 @@
 <p>{{ object.body }}</p>
 <p>Published: {{ object.pub_date|date }}</p>
 <p>Expires: {{ object.exp_date|date }}</p>
-<p>Author: {{ object.author }}</p>
+<p>Author:
+    {% if object.author is not None%}
+    <a href={% url 'accounts:user-profile' pk=object.author.pk %}>{{ object.author }}</a>
+    {% else %}
+    {{ object.author}}
+    {% endif %}
+</p>
 
 {% if request.user == object.author or request.user.is_staff %}
 <h2>Actions</h2>

@@ -6,6 +6,7 @@ from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from noticeboard.models import Notice
 
 
 # Create your views here.
@@ -25,6 +26,15 @@ class RegistrationSuccessView(TemplateView):
 
 class UserProfileView(LoginRequiredMixin, DetailView):
     model = User
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["notices"] = Notice.objects.filter(
+            author=self.object).order_by('-exp_date')
+        return context
+
+
+class CurrentUserProfileView(UserProfileView):
     success_url = reverse_lazy('noticeboard:active-notices')
 
     def get_success_url(self):
