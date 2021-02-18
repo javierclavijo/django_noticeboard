@@ -7,4 +7,16 @@
 <p>Expires: {{ object.exp_date|date }}</p>
 <p>Author: {{ object.author }}</p>
 
+{% if request.user == object.author or request.user.is_staff %}
+<h2>Actions</h2>
+<ul>
+    <li>
+        <a href={% url 'noticeboard:delete' pk=object.pk %}>Delete notice</a>
+    </li>
+    <li>
+        <a href={% url 'noticeboard:update' pk=object.pk %}>Update notice</a>
+    </li>
+</ul>
+{% endif %}
+
 {% endblock %}

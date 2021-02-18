@@ -8,7 +8,7 @@ class NewNoteForm(forms.ModelForm):
         model = Notice
         fields = ['title', 'body', 'exp_date']
         widgets = {
-            'exp_date': forms.DateInput(attrs={'type': 'datetime-local'})
+            'exp_date': forms.DateInput(attrs={'type': 'date'})
         }
 
     def clean(self):
