@@ -33,6 +33,10 @@ class SingleNoticeView(generic.DetailView):
     model = Notice
 
 
-class NewNoticeView(generic.CreateView):
+class NewNoticeView(LoginRequiredMixin, generic.CreateView):
     form_class = NewNoteForm
     template_name = 'noticeboard/notice_form.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
